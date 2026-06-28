@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>KaloClair - Mange mieux, dépense moins</title>
+
+  <meta name="description" content="KaloClair vous aide à mieux choisir vos produits alimentaires selon la santé, les calories et le budget." />
+  <meta name="theme-color" content="#10b981" />
+
+  <link rel="manifest" href="manifest.json" />
+
+  <style>
+    :root {
+      --green: #10b981;
+      --green-dark: #047857;
+      --turquoise: #06b6d4;
+      --blue-dark: #0f172a;
+      --soft-bg: #f0fdf4;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --good: #22c55e;
+      --shadow: 0 14px 35px rgba(15, 23, 42, 0.12);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(6, 182, 212, 0.18), transparent 35%),
+        radial-gradient(circle at top right, rgba(16, 185, 129, 0.22), transparent 30%),
+        linear-gradient(180deg, #ecfeff 0%, #f0fdf4 45%, #ffffff 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 18px;
+      padding-bottom: 95px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f766e, #10b981, #06b6d4);
+      border-radius: 32px;
+      padding: 28px 22px;
+      color: white;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .hero::before {
+      width: 140px;
+      height: 140px;
+      top: -50px;
+      right: -40px;
+    }
+
+    .hero::after {
+      width: 90px;
+      height: 90px;
+      bottom: -30px;
+      left: -20px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      font-size: 16px;
+      line-height: 1.45;
+      opacity: 0.96;
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .primary-btn {
+      background: #ffffff;
+      color: #047857;
+      padding: 15px 18px;
+      border-radius: 18px;
+      font-size: 16px;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.18);
+      color: white;
+      padding: 13px 18px;
+      border-radius: 18px;
+      font-size: 15px;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin: 0 0 12px;
+      color: var(--blue-dark);
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      margin-bottom: 14px;
+    }
+
+    .input-label {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--blue-dark);
+    }
+
+    .input {
+      width: 100%;
+      border: 2px solid #d1fae5;
+      border-radius: 18px;
+      padding: 15px 16px;
+      font-size: 16px;
+      outline: none;
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    .input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mode-btn {
+      background: #f8fafc;
+      border: 2px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 13px 10px;
+      text-align: left;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .mode-btn small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .mode-btn.active {
+      border-color: var(--green);
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .analyze-btn {
+      width: 100%;
+      margin-top: 14px;
+      background: linear-gradient(135deg, var(--green), var(--turquoise));
+      color: white;
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow: 0 12px 25px rgba(16, 185, 129, 0.25);
+    }
+
+    .quick-products {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .chip {
+      background: #ecfeff;
+      color: #0f766e;
+      border: 1px solid #a7f3d0;
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .result {
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .product-name {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--blue-dark);
+      margin: 0;
+    }
+
+    .product-category {
+      color: var(--muted);
+      font-weight: 700;
+      margin-top: 4px;
+      font-size: 13px;
+    }
+
+    .global-score {
+      min-width: 78px;
+      height: 78px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 950;
+      font-size: 24px;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.16);
+    }
+
+    .score-good {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+    }
+
+    .score-mid {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+    }
+
+    .score-bad {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .score-card {
+      background: #f8fafc;
+      border-radius: 18px;
+      padding: 14px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .score-label {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .score-value {
+      font-size: 22px;
+      font-weight: 950;
+      color: var(--blue-dark);
+    }
+
+    .nutrition-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .nutrition-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f9fafb;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid #edf2f7;
+    }
+
+    .nutrition-row span:first-child {
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .level {
+      font-weight: 900;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .low {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .high {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .advice {
+      background: linear-gradient(135deg, #ecfdf5, #ecfeff);
+      border-left: 5px solid var(--green);
+      border-radius: 18px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .advice strong {
+      display: block;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+
+    .advice p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .alternative {
+      background: #fff7ed;
+      border-left: 5px solid var(--warning);
+      border-radius: 18px;
+      padding: 15px;
+      margin-top: 12px;
+    }
+
+    .alternative strong {
+      display: block;
+      color: #9a3412;
+      margin-bottom: 6px;
+    }
+
+    .alternative p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .history-empty {
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-name {
+      font-weight: 900;
+      color: var(--blue-dark);
+    }
+
+    .history-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 3px;
+    }
+
+    .mini-score {
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: white;
+      font-weight: 900;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(440px, calc(100% - 24px));
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      border-radius: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 8px;
+      z-index: 20;
+    }
+
+    .nav-btn {
+      background: transparent;
+      color: var(--muted);
+      font-weight: 900;
+      padding: 10px 6px;
+      border-radius: 16px;
+      font-size: 13px;
+    }
+
+    .nav-btn.active {
+      background: #ecfdf5;
+      color: var(--green-dark);
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .small-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .disclaimer {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 18px;
+      padding: 13px;
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 600;
+      margin-top: 14px;
+    }
+
+    .clear-btn {
+      width: 100%;
+      background: #f1f5f9;
+      color: #334155;
+      padding: 13px;
+      border-radius: 16px;
+      font-weight: 900;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 30px;
+      }
+
+      .score-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <section id="homeScreen" class="screen active">
+      <div class="hero">
+        <div class="hero-content">
+          <div class="badge">🥗 V1 Budget Santé</div>
+          <h1>KaloClair</h1>
+          <p class="subtitle">
+            Mange mieux, dépense moins. Une aide simple pour comprendre les produits alimentaires sans se prendre la tête.
+          </p>
+
+          <div class="hero-actions">
+            <button class="primary-btn" onclick="goToScreen('analyzeScreen')">
+              Analyser un produit
+            </button>
+            <button class="secondary-btn" onclick="goToScreen('historyScreen')">
+              Voir mon historique
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Pourquoi KaloClair ?</h2>
+
+        <div class="card">
+          <strong>✅ Santé</strong>
+          <p class="small-note">
+            Comprendre rapidement si un produit est plutôt équilibré, trop sucré, trop gras ou trop salé.
+          </p>
+        </div>
+
+        <div class="card">
+          <strong>💶 Budget</strong>
+          <p class="small-note">
+            Aider à repérer les choix plus malins pour le quotidien, surtout quand chaque euro compte.
+          </p>
+        </div>
+
+        <div class="card">
+          <strong>👨‍👩‍👧‍👦 Famille</strong>
+          <p class="small-note">
+            Des conseils simples, non culpabilisants, pensés pour la vraie vie.
+          </p>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        Cette V1 donne une analyse indicative. Elle ne remplace pas un avis médical ou nutritionnel professionnel.
+      </div>
+    </section>
+
+    <section id="analyzeScreen" class="screen">
+      <div class="section">
+        <h2 class="section-title">Analyser un produit</h2>
+
+        <div class="card">
+          <label class="input-label" for="productInput">Nom du produit</label>
+          <input
+            id="productInput"
+            class="input"
+            type="text"
+            placeholder="Ex : Coca, Nutella, yaourt, pâtes..."
+          />
+
+          <div class="quick-products">
+            <button class="chip" onclick="quickProduct('Nutella')">Nutella</button>
+            <button class="chip" onclick="quickProduct('Coca-Cola')">Coca-Cola</button>
+            <button class="chip" onclick="quickProduct('Yaourt nature')">Yaourt</button>
+            <button class="chip" onclick="quickProduct('Pâtes')">Pâtes</button>
+            <button class="chip" onclick="quickProduct('Céréales chocolat')">Céréales</button>
+          </div>
+
+          <div class="mode-grid">
+            <button class="mode-btn active" data-mode="equilibre" onclick="selectMode('equilibre')">
+              Équilibre
+              <small>Choix quotidien</small>
+            </button>
+
+            <button class="mode-btn" data-mode="budget" onclick="selectMode('budget')">
+              Petit budget
+              <small>Économiser</small>
+            </button>
+
+            <button class="mode-btn" data-mode="poids" onclick="selectMode('poids')">
+              Perte de poids
+              <small>Calories</small>
+            </button>
+
+            <button class="mode-btn" data-mode="sport" onclick="selectMode('sport')">
+              Sport
+              <small>Protéines</small>
+            </button>
+          </div>
+
+          <button class="analyze-btn" onclick="analyzeProduct()">
+            Analyser maintenant
+          </button>
+        </div>
+
+        <div id="resultCard" class="card result">
+          <div class="result-header">
+            <div>
+              <h3 id="resultName" class="product-name">Produit</h3>
+              <div id="resultCategory" class="product-category">Catégorie</div>
+            </div>
+            <div id="globalScore" class="global-score score-mid">6/10</div>
+          </div>
+
+          <div class="score-grid">
+            <div class="score-card">
+              <div class="score-label">Score santé</div>
+              <div id="healthScore" class="score-value">6/10</div>
+            </div>
+
+            <div class="score-card">
+              <div class="score-label">Score budget</div>
+              <div id="budgetScore" class="score-value">6/10</div>
+            </div>
+          </div>
+
+          <div class="nutrition-list">
+            <div class="nutrition-row">
+              <span>Calories</span>
+              <span id="caloriesLevel" class="level medium">Moyen</span>
+            </div>
+
+            <div class="nutrition-row">
+              <span>Sucre</span>
+              <span id="sugarLevel" class="level medium">Moyen</span>
+            </div>
+
+            <div class="nutrition-row">
+              <span>Sel</span>
+              <span id="saltLevel" class="level medium">Moyen</span>
+            </div>
+
+            <div class="nutrition-row">
+              <span>Matières grasses</span>
+              <span id="fatLevel" class="level medium">Moyen</span>
+            </div>
+
+            <div class="nutrition-row">
+              <span>Protéines</span>
+              <span id="proteinLevel" class="level medium">Moyen</span>
+            </div>
+          </div>
+
+          <div class="advice">
+            <strong>Conseil KaloClair</strong>
+            <p id="adviceText">Conseil personnalisé.</p>
+          </div>
+
+          <div class="alternative">
+            <strong>Alternative plus maline</strong>
+            <p id="alternativeText">Alternative recommandée.</p>
+          </div>
+
+          <div class="disclaimer">
+            Analyse indicative basée sur des règles simples. La V2 pourra intégrer une vraie base produits avec Open Food Facts.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="historyScreen" class="screen">
+      <div class="section">
+        <h2 class="section-title">Historique</h2>
+
+        <div class="card">
+          <div id="historyList"></div>
+          <button class="clear-btn" onclick="clearHistory()">Effacer l’historique</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button id="navHome" class="nav-btn active" onclick="goToScreen('homeScreen')">Accueil</button>
+    <button id="navAnalyze" class="nav-btn" onclick="goToScreen('analyzeScreen')">Analyse</button>
+    <button id="navHistory" class="nav-btn" onclick="goToScreen('historyScreen')">Historique</button>
+  </nav>
+
+  <script>
+    let selectedMode = "equilibre";
+
+    const productRules = [
+      {
+        keywords: ["nutella", "pâte à tartiner", "tartiner"],
+        name: "Pâte à tartiner",
+        category: "Produit plaisir",
+        health: 3,
+        budget: 4,
+        calories: "Élevé",
+        sugar: "Très élevé",
+        salt: "Faible",
+        fat: "Élevé",
+        protein: "Faible",
+        advice: "Produit plaisir. Il peut faire partie d’un moment gourmand, mais il vaut mieux éviter d’en faire un choix quotidien.",
+        alternative: "Essayer une tartine avec purée de cacahuète sans sucre ajouté, compote sans sucre ou fruit frais."
+      },
+      {
+        keywords: ["coca", "soda", "cola", "fanta", "sprite"],
+        name: "Soda",
+        category: "Boisson sucrée",
+        health: 2,
+        budget: 5,
+        calories: "Élevé",
+        sugar: "Très élevé",
+        salt: "Faible",
+        fat: "Faible",
+        protein: "Faible",
+        advice: "Boisson très sucrée. À garder pour une occasion, pas comme boisson principale au quotidien.",
+        alternative: "Eau fraîche, eau pétillante avec citron, thé glacé maison peu sucré."
+      },
+      {
+        keywords: ["yaourt", "fromage blanc", "skyr"],
+        name: "Yaourt nature",
+        category: "Produit laitier",
+        health: 8,
+        budget: 7,
+        calories: "Faible",
+        sugar: "Faible",
+        salt: "Faible",
+        fat: "Moyen",
+        protein: "Moyen",
+        advice: "Bon choix simple, surtout s’il est nature. Attention aux versions très sucrées ou desserts lactés.",
+        alternative: "Yaourt nature + fruit frais, fromage blanc nature ou skyr selon l’objectif protéines."
+      },
+      {
+        keywords: ["pâtes", "pates", "spaghetti", "macaroni", "penne"],
+        name: "Pâtes",
+        category: "Féculent",
+        health: 7,
+        budget: 9,
+        calories: "Moyen",
+        sugar: "Faible",
+        salt: "Faible",
+        fat: "Faible",
+        protein: "Moyen",
+        advice: "Bon produit de base, économique et pratique. L’équilibre dépend surtout de la portion et de l’accompagnement.",
+        alternative: "Pâtes complètes, riz complet, lentilles ou pâtes avec légumes et source de protéines."
+      },
+      {
+        keywords: ["céréales", "cereales", "chocapic", "miel pops", "trésor", "tresor"],
+        name: "Céréales sucrées",
+        category: "Petit-déjeuner",
+        health: 4,
+        budget: 5,
+        calories: "Élevé",
+        sugar: "Élevé",
+        salt: "Moyen",
+        fat: "Moyen",
+        protein: "Faible",
+        advice: "Souvent trop sucré pour tous les matins. Peut dépanner, mais ce n’est pas le meilleur choix quotidien.",
+        alternative: "Flocons d’avoine, pain complet, fruit, yaourt nature ou céréales moins sucrées."
+      },
+      {
+        keywords: ["chips", "pringles", "apéritif", "aperitif"],
+        name: "Chips",
+        category: "Snack salé",
+        health: 3,
+        budget: 4,
+        calories: "Élevé",
+        sugar: "Faible",
+        salt: "Élevé",
+        fat: "Élevé",
+        protein: "Faible",
+        advice: "Produit plaisir salé, souvent gras et salé. À garder pour l’occasionnel.",
+        alternative: "Pop-corn maison peu salé, noix en petite portion, bâtonnets de carotte ou crackers complets."
+      },
+      {
+        keywords: ["riz", "basmati", "thaï", "thai"],
+        name: "Riz",
+        category: "Féculent",
+        health: 7,
+        budget: 8,
+        calories: "Moyen",
+        sugar: "Faible",
+        salt: "Faible",
+        fat: "Faible",
+        protein: "Faible",
+        advice: "Bon produit de base, simple et économique. À équilibrer avec légumes et protéines.",
+        alternative: "Riz complet, semoule complète, lentilles ou mélange riz-légumineuses."
+      },
+      {
+        keywords: ["thon", "sardine", "maquereau"],
+        name: "Poisson en conserve",
+        category: "Protéines",
+        health: 8,
+        budget: 7,
+        calories: "Moyen",
+        sugar: "Faible",
+        salt: "Moyen",
+        fat: "Moyen",
+        protein: "Élevé",
+        advice: "Bon choix pratique pour les protéines. Attention au sel selon les marques.",
+        alternative: "Œufs, poulet, lentilles, pois chiches ou poisson frais selon budget."
+      }
+    ];
+
+    function goToScreen(screenId) {
+      document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+      });
+
+      document.getElementById(screenId).classList.add("active");
+
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      if (screenId === "homeScreen") {
+        document.getElementById("navHome").classList.add("active");
+      }
+
+      if (screenId === "analyzeScreen") {
+        document.getElementById("navAnalyze").classList.add("active");
+      }
+
+      if (screenId === "historyScreen") {
+        document.getElementById("navHistory").classList.add("active");
+        renderHistory();
+      }
+    }
+
+    function selectMode(mode) {
+      selectedMode = mode;
+
+      document.querySelectorAll(".mode-btn").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      document.querySelector(`[data-mode="${mode}"]`).classList.add("active");
+    }
+
+    function quickProduct(productName) {
+      document.getElementById("productInput").value = productName;
+      analyzeProduct();
+    }
+
+    function analyzeProduct() {
+      const input = document.getElementById("productInput").value.trim();
+
+      if (!input) {
+        alert("Écris le nom d’un produit à analyser.");
+        return;
+      }
+
+      const normalized = input.toLowerCase();
+
+      let product = productRules.find(item =>
+        item.keywords.some(keyword => normalized.includes(keyword))
+      );
+
+      if (!product) {
+        product = createGenericProduct(input);
+      }
+
+      const adjustedProduct = applyModeAdjustment(product);
+      displayResult(input, adjustedProduct);
+      saveToHistory(input, adjustedProduct);
+    }
+
+    function createGenericProduct(input) {
+      return {
+        name: input,
+        category: "Produit à vérifier",
+        health: 6,
+        budget: 6,
+        calories: "Moyen",
+        sugar: "Moyen",
+        salt: "Moyen",
+        fat: "Moyen",
+        protein: "Moyen",
+        advice: "Produit non reconnu dans cette V1. Regarde surtout la quantité de sucre, de sel, de matières grasses et la liste d’ingrédients.",
+        alternative: "Comparer avec une version plus simple, moins sucrée, moins salée ou avec une liste d’ingrédients plus courte."
+      };
+    }
+
+    function applyModeAdjustment(product) {
+      const copy = { ...product };
+
+      if (selectedMode === "budget") {
+        copy.budget = Math.min(10, copy.budget + 1);
+        copy.advice += " En mode petit budget, privilégie les produits simples, les grands formats utiles et les marques distributeur.";
+      }
+
+      if (selectedMode === "poids") {
+        if (copy.calories === "Élevé" || copy.sugar === "Élevé" || copy.sugar === "Très élevé") {
+          copy.health = Math.max(1, copy.health - 1);
+        }
+
+        copy.advice += " En objectif perte de poids, surveille surtout les portions, les boissons sucrées et les produits très caloriques.";
+      }
+
+      if (selectedMode === "sport") {
+        if (copy.protein === "Élevé" || copy.protein === "Moyen") {
+          copy.health = Math.min(10, copy.health + 1);
+        }
+
+        copy.advice += " En mode sport, vérifie que le produit apporte assez de protéines et qu’il ne soit pas trop sucré.";
+      }
+
+      return copy;
+    }
+
+    function displayResult(inputName, product) {
+      const averageScore = Math.round((product.health + product.budget) / 2);
+
+      document.getElementById("resultName").textContent = inputName;
+      document.getElementById("resultCategory").textContent = product.category;
+
+      document.getElementById("healthScore").textContent = product.health + "/10";
+      document.getElementById("budgetScore").textContent = product.budget + "/10";
+
+      const globalScore = document.getElementById("globalScore");
+      globalScore.textContent = averageScore + "/10";
+      globalScore.className = "global-score " + getScoreClass(averageScore);
+
+      setLevel("caloriesLevel", product.calories);
+      setLevel("sugarLevel", product.sugar);
+      setLevel("saltLevel", product.salt);
+      setLevel("fatLevel", product.fat);
+      setLevel("proteinLevel", product.protein);
+
+      document.getElementById("adviceText").textContent = product.advice;
+      document.getElementById("alternativeText").textContent = product.alternative;
+
+      document.getElementById("resultCard").classList.add("show");
+    }
+
+    function getScoreClass(score) {
+      if (score >= 7) return "score-good";
+      if (score >= 5) return "score-mid";
+      return "score-bad";
+    }
+
+    function setLevel(elementId, value) {
+      const element = document.getElementById(elementId);
+      element.textContent = value;
+
+      element.className = "level";
+
+      if (value === "Faible") {
+        element.classList.add("low");
+      } else if (value === "Moyen") {
+        element.classList.add("medium");
+      } else {
+        element.classList.add("high");
+      }
+    }
+
+    function saveToHistory(inputName, product) {
+      const history = getHistory();
+      const averageScore = Math.round((product.health + product.budget) / 2);
+
+      const item = {
+        name: inputName,
+        category: product.category,
+        score: averageScore,
+        mode: selectedMode,
+        date: new Date().toLocaleDateString("fr-FR")
+      };
+
+      const updatedHistory = [
+        item,
+        ...history.filter(existing => existing.name.toLowerCase() !== inputName.toLowerCase())
+      ].slice(0, 10);
+
+      localStorage.setItem("kaloclair_history", JSON.stringify(updatedHistory));
+    }
+
+    function getHistory() {
+      try {
+        return JSON.parse(localStorage.getItem("kaloclair_history")) || [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function renderHistory() {
+      const history = getHistory();
+      const container = document.getElementById("historyList");
+
+      if (history.length === 0) {
+        container.innerHTML = `<p class="history-empty">Aucun produit analysé pour le moment.</p>`;
+        return;
+      }
+
+      container.innerHTML = history.map(item => {
+        const scoreClass = getScoreClass(item.score);
+        const modeLabel = getModeLabel(item.mode);
+
+        return `
+          <div class="history-item">
+            <div>
+              <div class="history-name">${escapeHtml(item.name)}</div>
+              <div class="history-meta">${escapeHtml(item.category)} • ${modeLabel} • ${item.date}</div>
+            </div>
+            <div class="mini-score ${scoreClass}">${item.score}/10</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function getModeLabel(mode) {
+      const labels = {
+        equilibre: "Équilibre",
+        budget: "Petit budget",
+        poids: "Perte de poids",
+        sport: "Sport"
+      };
+
+      return labels[mode] || "Équilibre";
+    }
+
+    function clearHistory() {
+      localStorage.removeItem("kaloclair_history");
+      renderHistory();
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(error => {
+          console.log("Service worker non enregistré :", error);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
