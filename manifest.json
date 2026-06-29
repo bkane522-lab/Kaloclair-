@@ -1,11 +1,12 @@
 {
-  "name": "KaloClair Budget Santé",
+  "name": "KaloClair V2.1 - Scan IA",
   "short_name": "KaloClair",
-  "description": "Mange mieux, dépense moins. Analyse simple des produits alimentaires selon la santé, les calories et le budget.",
+  "description": "Scannez un produit, obtenez un K-Score, un verdict achat et des alternatives.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f0fdf4",
-  "theme_color": "#10b981",
+  "background_color": "#0B1020",
+  "theme_color": "#0B1020",
   "orientation": "portrait",
   "icons": [
     {
@@ -26,5 +27,12 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "categories": [
+    "food",
+    "shopping",
+    "health",
+    "productivity"
+  ],
+  "lang": "fr"
 }
