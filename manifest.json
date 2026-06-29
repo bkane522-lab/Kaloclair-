@@ -1,12 +1,12 @@
 {
-  "name": "KaloClair V2.1 - Scan IA",
+  "name": "KaloClair V3 — Radar alimentaire IA",
   "short_name": "KaloClair",
-  "description": "Scannez un produit, obtenez un K-Score, un verdict achat et des alternatives.",
+  "description": "Éclairez vos choix alimentaires avec scan, K-Score, comparaison et empreinte alimentaire.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0B1020",
-  "theme_color": "#0B1020",
+  "background_color": "#070B14",
+  "theme_color": "#070B14",
   "orientation": "portrait",
   "icons": [
     {

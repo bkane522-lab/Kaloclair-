@@ -1,24 +1,33 @@
-# KaloClair V2.1 — Scan IA
+# KaloClair V3 — Radar alimentaire IA
 
-Inclus :
-- design dark néon
-- bouton hero qui scrolle vers le champ de scan
-- scan caméra via BarcodeDetector si disponible
-- saisie manuelle du code-barres en fallback
-- /api/product vers Open Food Facts
-- /api/analyze vers Claude si ANTHROPIC_API_KEY est configurée
-- fallback local automatique
-- comparaison de 2 produits
-- stats animées
-- historique local
-- PWA installable
+Version KaloClair avec direction visuelle dark futuriste / néon.
 
-Vercel > Project > Settings > Environment Variables :
-ANTHROPIC_API_KEY = votre clé API Claude
-Optionnel : ANTHROPIC_MODEL = claude-haiku-4-5-20251001
+## Inclus
 
-Sans clé API, l'application fonctionne quand même avec le moteur local.
+- Nom et branding KaloClair
+- K-Score
+- Radar Score
+- Scan produit par code-barres
+- Open Food Facts via `/api/product.js`
+- Analyse Claude côté serveur via `/api/analyze.js` si `ANTHROPIC_API_KEY` est configurée
+- Fallback local automatique si Claude échoue ou si la clé manque
+- Comparateur de produits
+- Empreinte alimentaire / profil
+- Historique local
+- PWA installable avec icônes KaloClair
 
-Tests :
-- Nutella : 3017624010701
-- Coca-Cola : 5449000000996
+## Variable Vercel
+
+Ajoutez dans Vercel > Project > Settings > Environment Variables :
+
+```text
+ANTHROPIC_API_KEY = votre clé Claude
+```
+
+Optionnel :
+
+```text
+ANTHROPIC_MODEL = claude-haiku-4-5-20251001
+```
+
+Sans clé Claude, l’app fonctionne avec le moteur local.
